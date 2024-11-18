@@ -3,20 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphique de l'Évolution des Cas par Pays</title>
-    <link rel="stylesheet" href="Projet_Matthis_BV.css"> <!-- Si tu as un fichier CSS -->
-    <!-- Inclure Chart.js -->
+    <title>Graphique de l'Évolution des Indicateurs par Pays</title>
+    <link rel="stylesheet" href="Projet_Matthis_BV.css"> <!-- Fichier CSS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                                                         
 </head>
 <body>
     <div class="container">
-        <h1>Évolution des Cas par Pays</h1>
+        <h1>Évolution des Indicateurs par Pays</h1>
+        
+        <!-- Sélection des pays -->
         <div class="checkboxes">
             <label><input type="checkbox" id="france" checked> France</label>
             <label><input type="checkbox" id="usa"> USA</label>
             <label><input type="checkbox" id="germany"> Allemagne</label>
             <label><input type="checkbox" id="spain"> Espagne</label>
+            <label><input type="checkbox" id="italy"> Italie</label>
         </div>
+        
+        <!-- Sélection de l'indicateur -->
+        <div class="indicator-select">
+            <label for="indicator">Choisir l'indicateur :</label>
+            <select id="indicator">
+                <option value="cases">Cas de COVID-19</option>
+                <option value="temperature">Température Moyenne (°C)</option>
+                <option value="gdpGrowth">Croissance du PIB (%)</option>
+                <option value="sales">Ventes de Produits</option>
+                <option value="vaccinationRate">Taux de Vaccination (%)</option>
+                <option value="unemploymentRate">Taux de Chômage (%)</option>
+                <option value="energyConsumption">Consommation d'Énergie (kWh)</option>
+                <option value="airQualityIndex">Indice de Qualité de l'Air</option>
+                <option value="travelers">Nombre de Voyageurs</option>
+            </select>
+        </div>
+
         <!-- Le canvas où le graphique sera dessiné -->
         <canvas id="myChart"></canvas>
     </div>
@@ -25,5 +44,4 @@
     <script src="Projet_Matthis_BV.js" defer></script>
 </body>
 </html>
-
 
