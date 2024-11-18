@@ -8,8 +8,20 @@ h1 {
     margin-bottom: 20px;
 }
 
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.checkboxes {
+    margin-bottom: 20px;
+}
+
+.indicator-select {
+    margin: 20px 0;
+}
+
 canvas {
     max-width: 800px;
     margin-top: 20px;
 }
-
