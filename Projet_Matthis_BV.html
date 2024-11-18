@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphique de l'Évolution des Cas par Pays</title>
+    <link rel="stylesheet" href="Projet_Matthis_BV.css"> <!-- Si tu as un fichier CSS -->
+    <!-- Inclure Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                                                         
+</head>
+<body>
+    <div class="container">
+        <h1>Évolution des Cas par Pays</h1>
+        <div class="checkboxes">
+            <label><input type="checkbox" id="france" checked> France</label>
+            <label><input type="checkbox" id="usa"> USA</label>
+            <label><input type="checkbox" id="germany"> Allemagne</label>
+            <label><input type="checkbox" id="spain"> Espagne</label>
+        </div>
+        <!-- Le canvas où le graphique sera dessiné -->
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- Inclure ton fichier JavaScript -->
+    <script src="Projet_Matthis_BV.js" defer></script>
+</body>
+</html>
+
+
