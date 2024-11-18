@@ -1,8 +1,7 @@
-// Base de données mise à jour avec des dates espacées entre 2020 et 2023 et des valeurs plus variées
 const dataCountries = {
     france: {
         labels: ['2020-01-01', '2021-01-01', '2022-01-01', '2023-01-01'],
-        cases: [5000, 8000, 12000, 18000], // Valeurs plus espacées
+        cases: [5000, 8000, 12000, 18000],
         temperature: [8, 10, 12, 14],
         gdpGrowth: [0.3, 0.5, 0.7, 1.1],
         sales: [150, 200, 300, 500],
@@ -62,23 +61,37 @@ const dataCountries = {
     },
 };
 
-// Initialisation du graphique avec la France par défaut, pour l'indicateur "cases"
-const ctx = document.getElementById('myChart').getContext('2d');
-let chart = new Chart(ctx, {
-    type: 'line', // Type de graphique
+const ctxLine = document.getElementById('myChart').getContext('2d');
+const ctxBar = document.getElementById('barChart').getContext('2d');
+
+let chartLine = new Chart(ctxLine, {
+    type: 'line',
     data: {
-        labels: dataCountries.france.labels, // Labels (dates)
+        labels: dataCountries.france.labels,
         datasets: [{
             label: 'France - Cas COVID',
-            data: dataCountries.france.cases, // Par défaut, on montre les cas de COVID
+            data: dataCountries.france.cases,
             borderColor: 'rgba(75, 192, 192, 1)',
-            fill: false, // Pas de remplissage sous la courbe
+            fill: false
         }]
     }
 });
 
-// Fonction pour mettre à jour le graphique en fonction des pays et de l'indicateur sélectionné
-function updateChart() {
+let chartBar = new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+        labels: dataCountries.france.labels,
+        datasets: [{
+            label: 'France - Cas COVID',
+            data: dataCountries.france.cases,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    }
+});
+
+function updateCharts() {
     const selectedCountries = [];
     if (document.getElementById('france').checked) selectedCountries.push('france');
     if (document.getElementById('usa').checked) selectedCountries.push('usa');
@@ -86,34 +99,46 @@ function updateChart() {
     if (document.getElementById('spain').checked) selectedCountries.push('spain');
     if (document.getElementById('italy').checked) selectedCountries.push('italy');
 
-    // Récupérer l'indicateur sélectionné dans le menu déroulant
     const selectedIndicator = document.getElementById('indicator').value;
 
-    // Mettre à jour les datasets avec les données de chaque pays pour l'indicateur sélectionné
-    const selectedData = selectedCountries.map(country => ({
-        label: `${country.charAt(0).toUpperCase() + country.slice(1)} - ${selectedIndicator.replace(/([A-Z])/g, ' $1')}`, // Exemple : "France - Cas COVID"
-        data: dataCountries[country][selectedIndicator], // Utilisation de l'indicateur sélectionné
-        borderColor: country === 'france' ? 'rgba(75, 192, 192, 1)' :
-                      country === 'usa' ? 'rgba(255, 99, 132, 1)' :
-                      country === 'germany' ? 'rgba(54, 162, 235, 1)' :
-                      country === 'spain' ? 'rgba(153, 102, 255, 1)' : 'rgba(255, 159, 64, 1)',
-        fill: false,
+    const lineData = selectedCountries.map(country => ({
+        label: `${country.charAt(0).toUpperCase() + country.slice(1)} - ${selectedIndicator}`,
+        data: dataCountries[country][selectedIndicator],
+        borderColor: country === 'france' ? 'rgba(75, 192, 192, 1)' : 
+                     country === 'usa' ? 'rgba(255, 99, 132, 1)' : 
+                     country === 'germany' ? 'rgba(153, 102, 255, 1)' :
+                     country === 'spain' ? 'rgba(255, 159, 64, 1)' :
+                     'rgba(54, 162, 235, 1)',
+        fill: false
     }));
 
-    // Mettre à jour les données du graphique
-    chart.data.datasets = selectedData;
-    chart.data.labels = dataCountries[selectedCountries[0]]?.labels || [];
-    chart.update();
+    const barData = selectedCountries.map(country => ({
+        label: `${country.charAt(0).toUpperCase() + country.slice(1)} - ${selectedIndicator}`,
+        data: dataCountries[country][selectedIndicator],
+        backgroundColor: country === 'france' ? 'rgba(75, 192, 192, 0.2)' : 
+                         country === 'usa' ? 'rgba(255, 99, 132, 0.2)' : 
+                         country === 'germany' ? 'rgba(153, 102, 255, 0.2)' :
+                         country === 'spain' ? 'rgba(255, 159, 64, 0.2)' :
+                         'rgba(54, 162, 235, 0.2)',
+        borderColor: country === 'france' ? 'rgba(75, 192, 192, 1)' : 
+                      country === 'usa' ? 'rgba(255, 99, 132, 1)' : 
+                      country === 'germany' ? 'rgba(153, 102, 255, 1)' :
+                      country === 'spain' ? 'rgba(255, 159, 64, 1)' :
+                      'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+    }));
+
+    chartLine.data.datasets = lineData;
+    chartBar.data.datasets = barData;
+
+    chartLine.update();
+    chartBar.update();
 }
 
-// Mettre à jour le graphique à chaque fois qu'une case est cochée/décochée ou que l'indicateur change
 document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-    checkbox.addEventListener('change', updateChart);
+    checkbox.addEventListener('change', updateCharts);
 });
 
-document.getElementById('indicator').addEventListener('change', updateChart);
+document.getElementById('indicator').addEventListener('change', updateCharts);
 
-// Initialiser le graphique
-updateChart();
-
-
+updateCharts();
